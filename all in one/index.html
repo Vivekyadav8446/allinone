@@ -1,0 +1,2571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="img/logo 1.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>ALL IN ONE - Image Tools</title>
+  <style>
+    /* Color Variables */
+    :root {
+      --primary-color: #007bff;
+      --primary-dark: #0056b3;
+      --primary-light: #4591f5;
+      --success-color: #28a745;
+      --success-dark: #218838;
+      --danger-color: #dc3545;
+      --warning-color: #ffc107;
+      --info-color: #17a2b8;
+      --light-color: #f8f9fa;
+      --dark-color: #343a40;
+      --white: #ffffff;
+      --black: #000000;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --gray-dark: #495057;
+      
+      /* Theme variables */
+      --bg-color: #f4f4f9;
+      --text-color: #333;
+      --card-bg: #ffffff;
+      --border-color: #dee2e6;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --hover-color: #f0f0f0;
+    }
+
+    /* Dark Mode Variables */
+    .dark-mode {
+      --bg-color: #1a1a1a;
+      --text-color: #f4f4f9;
+      --card-bg: #333;
+      --border-color: #555;
+      --shadow-color: rgba(255, 255, 255, 0.1);
+      --hover-color: #2a2a2a;
+    }
+
+    /* Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary-color);
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header Styles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: var(--primary-color);
+      color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--white);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      background: transparent;
+      color: var(--white);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-toggle i {
+      font-size: 1.1rem;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      align-items: center;
+      background: var(--primary-dark);
+      padding: 10px 20px;
+    }
+
+    nav a {
+      color: var(--white);
+      padding: 8px 15px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border-radius: 5px;
+    }
+
+    nav a:hover {
+      color: #e6f065;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--primary-dark);
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 5px;
+      padding: 5px 0;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      color: var(--white);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      background-color: var(--primary-color);
+    }
+
+    /* Menu Toggle */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--white);
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 80px 20px;
+       background: linear-gradient(80deg, var(--primary-color), var(--success-color), var(--primary-color));
+        animation: gradientMove 5s linear infinite;
+         background-size: 200% auto;
+      animation: gradientMove 5s linear infinite;
+      display: flex;
+     
+     
+      border-radius: 5px;
+      overflow: hidden;
+     
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+     @keyframes gradientMove {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+
+    .hero-content {
+      max-width: 600px;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .hero-btn {
+      display: inline-block;
+      background: var(--white);
+      color: var(--primary-color);
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .hero-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .pattern img {
+      width: 400px;
+      position: absolute;
+      top: 1%;
+      left: 75%;
+      animation: move 1s linear infinite alternate-reverse;
+    }
+    .pattern img:nth-child(1) {
+      transform: rotate(-45deg) translate(-70px, -50px);
+      animation-delay: 0.5s;
+    }
+    .pattern img:nth-child(2) {
+      transform: rotate(65deg) translate(0px, -40px) scale(0.8);
+      animation-delay: 1.5s;
+    }
+    @keyframes move {
+      100% {
+        margin-left: 40px;
+        margin-top: 20px;
+        opacity: 0.3;
+      }
+    }
+
+    /* Tool Cards */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 4px 10px var(--shadow-color);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border-left: 4px solid var(--primary-color);
+      text-align: center;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px var(--shadow-color);
+    }
+
+    .tool-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+
+    .tool-card h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+
+    .tool-card p {
+      color: var(--gray);
+      margin-bottom: 15px;
+    }
+
+    /* Tool Pages */
+    .tool-page {
+      padding: 40px 0;
+    }
+
+    .tool-page h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--primary-color);
+    }
+
+    /* Drag and Drop */
+    .drag-drop-container {
+      border: 3px dashed var(--primary-color);
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      background: var(--card-bg);
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .drag-drop-container.drag-over {
+      border-color: var(--success-color);
+      background-color: rgba(40, 167, 69, 0.1);
+    }
+
+    .drop-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .drop-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: var(--white);
+      transition: all 0.3s;
+    }
+
+    .drop-text {
+      color: var(--primary-color);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .drop-hint {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 5px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      color: var(--white);
+    }
+
+    .btn-success {
+      background: var(--success-color);
+      color: var(--white);
+    }
+
+    .btn-success:hover {
+      background: var(--success-dark);
+      color: var(--white);
+    }
+
+    /* Forms */
+    input[type="file"] {
+      display: none;
+    }
+
+    select, input[type="text"], input[type="number"], textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      background: var(--card-bg);
+      color: var(--text-color);
+      transition: border-color 0.3s ease;
+    }
+
+    select:focus, input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    /* Output */
+    .output {
+      margin-top: 30px;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 4px 10px var(--shadow-color);
+    }
+
+    .output img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-color);
+      color: var(--white);
+      padding: 60px 0 0;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 15px;
+      color: var(--white);
+    }
+
+    .footer-col h3::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 2px;
+      background-color: var(--primary-color);
+      bottom: 0;
+      left: 0;
+    }
+
+    .footer-col p {
+      color: var(--gray-light);
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links li a {
+      color: var(--gray-light);
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links li a:hover {
+      color: var(--primary-color);
+    }
+
+    .footer-links li a i {
+      width: 20px;
+      text-align: center;
+    }
+
+    .copyright {
+      text-align: center;
+      padding: 25px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--gray-light);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 20px;
+      }
+
+      .hero-content {
+        margin-bottom: 40px;
+      }
+
+      .pattern img {
+      width: 400px;
+      position: absolute;
+      top: 1%;
+      left: 5%;
+      animation: move 1s linear infinite alternate-reverse;
+    }
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        padding: 10px 0;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      nav a {
+        padding: 12px 20px;
+        width: 100%;
+        text-align: left;
+      }
+
+      .dropdown {
+        width: 100%;
+      }
+
+      .dropdown-content {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        display: none;
+        background-color: var(--primary-light);
+      }
+
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-content a {
+        padding-left: 30px;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+      .pattern img {
+      width: 400px;
+      position: absolute;
+      top: 1%;
+      left: 5%;
+      animation: move 1s linear infinite alternate-reverse;
+    }
+    }
+
+    @media (max-width: 576px) {
+      .pattern img {
+      width: 400px;
+      position: absolute;
+      top: 1%;
+      left: 5%;
+      animation: move 1s linear infinite alternate-reverse;
+    }
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-btn {
+        padding: 10px 20px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-col h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    /* Utility Classes */
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-20 {
+      margin-top: 20px;
+    }
+
+    .mb-20 {
+      margin-bottom: 20px;
+    }
+
+    .py-40 {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    /* Page Transitions */
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Loading Spinner */
+    .loader {
+      border: 4px solid var(--gray-light);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Image Previews */
+    .image-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .image-preview {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border: 2px dashed var(--primary-color);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--card-bg);
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .image-number {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      background: rgba(0, 0, 0, 0.7);
+      color: var(--white);
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 12px;
+    }
+
+    .delete-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(220, 53, 69, 0.9);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0;
+    }
+
+    /* PDF Preview */
+    .pdf-preview-container {
+      margin: 20px 0;
+    }
+
+    .pdf-preview {
+      width: 100%;
+      height: 500px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+    }
+
+    /* Colorful Announcement */
+    .announcement {
+      height: 50px;
+      background: linear-gradient(90deg, var(--primary-color), var(--success-color), var(--primary-color));
+      background-size: 200% auto;
+      animation: gradientMove 3s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 20px 0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    .announcement h1 {
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 700;
+      color: var(--white);
+      text-align: center;
+      margin: 0;
+      padding: 0 20px;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 10px;
+      color: var(--white);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+ <!-- Header -->
+  <header>
+    <div class="header-left">
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo" onclick="switchPage('home-page')">
+        <img src="img/logo 1.png" alt="Logo">
+       
+      </div>
+    </div>
+    
+    <nav id="navMenu">
+      <a href="#home" onclick="switchPage('home-page')">
+        <i class="fas fa-home"></i> Home
+      </a>
+      <div class="dropdown" id="toolsDropdown">
+        <a href="#" class="dropbtn" onclick="toggleDropdown('toolsDropdown')">
+          <i class="fas fa-tools"></i> Tools
+        </a>
+        <div class="dropdown-content">
+          <a href="#image-convert" onclick="switchPage('image-convert-page')">
+            <i class="fas fa-exchange-alt"></i> Image Convert
+          </a>
+          <a href="#image-resizing" onclick="switchPage('image-resizing-page')">
+            <i class="fas fa-expand"></i> Image Resizing
+          </a>
+          <a href="#image-cropping" onclick="switchPage('image-cropping-page')">
+            <i class="fas fa-crop"></i> Image Cropping
+          </a>
+          <a href="#image-rotation" onclick="switchPage('image-rotation-page')">
+            <i class="fas fa-sync-alt"></i> Image Rotation
+          </a>
+          <a href="#image-to-pdf" onclick="switchPage('image-to-pdf-page')">
+            <i class="fas fa-file-pdf"></i> Image to PDF
+          </a>
+          <a href="#pdf-to-image" onclick="switchPage('pdf-to-image-page')">
+            <i class="fas fa-file-image"></i> PDF to Image
+          </a>
+        </div>
+      </div>
+      <a href="#features" onclick="showAnnouncement(); switchPage('features-page')">
+        <i class="fas fa-star"></i> Features
+      </a>
+      <a href="#about" onclick="switchPage('home-page'); setTimeout(() => document.getElementById('about').scrollIntoView(), 100)">
+        <i class="fas fa-info-circle"></i> About
+      </a>
+    </nav>
+    
+    <button class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+      <span>Dark Mode</span>
+    </button>
+  </header>
+
+  <!-- Home Page -->
+  <section id="home-page" class="page active">
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Powerful Image Tools for Everyone</h1>
+        <p>Convert, resize, crop, rotate and transform your images with our easy-to-use online tools. No installation required!</p>
+        <a href="#features" class="hero-btn" onclick="showAnnouncement(); switchPage('features-page')">
+          <i class="fas fa-rocket"></i> Explore Tools
+        </a>
+      </div>
+      <div class="pattern">
+        <img src="img/background.png" alt="Background Image">
+        <img src="img/background.png" alt="Background Image">
+      </div>
+    </div>
+
+    <div class="container py-40">
+      <div class="announcement" id="announcement">
+        <h1>NEW UPDATE: PDF Conversion Tools Now Available! | Drag & Drop Support Added | More Features Coming Soon!</h1>
+        <span class="close-btn" onclick="document.getElementById('announcement').style.display='none'">
+          <i class="fas fa-times"></i>
+        </span>
+      </div>
+
+      <div class="tools-grid">
+        <div class="tool-card" onclick="switchPage('image-convert-page')">
+          <div class="tool-icon">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <h3>Image Converter</h3>
+          <p>Convert between JPEG, PNG, WebP, and BMP formats with ease.</p>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-resizing-page')">
+          <div class="tool-icon">
+            <i class="fas fa-expand"></i>
+          </div>
+          <h3>Image Resizer</h3>
+          <p>Resize images to your desired dimensions while maintaining quality.</p>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-cropping-page')">
+          <div class="tool-icon">
+            <i class="fas fa-crop"></i>
+          </div>
+          <h3>Image Cropper</h3>
+          <p>Crop images to focus on specific areas or remove unwanted parts.</p>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-rotation-page')">
+          <div class="tool-icon">
+            <i class="fas fa-sync-alt"></i>
+          </div>
+          <h3>Image Rotator</h3>
+          <p>Rotate images by 90°, 180°, or 270° to fix orientation issues.</p>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-to-pdf-page')">
+          <div class="tool-icon">
+            <i class="fas fa-file-pdf"></i>
+          </div>
+          <h3>Image to PDF</h3>
+          <p>Convert multiple images to PDF documents with customizable options.</p>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('pdf-to-image-page')">
+          <div class="tool-icon">
+            <i class="fas fa-file-image"></i>
+          </div>
+          <h3>PDF to Image</h3>
+          <p>Extract PDF pages as images in JPG, PNG, or WebP format.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-40" style="background: var(--card-bg);">
+      <div class="container">
+        <h2 class="text-center mb-20">About Image Tools</h2>
+        <div class="about-content" style="max-width: 800px; margin: 0 auto;">
+          <p style="margin-bottom: 20px;">
+            Image Tools is a free online platform that provides a suite of powerful image processing tools. 
+            Our mission is to make image editing accessible to everyone without the need for complex software installations.
+          </p>
+          <p style="margin-bottom: 20px;">
+            All processing happens directly in your browser, ensuring your files never leave your device. 
+            We prioritize your privacy and security while delivering professional-quality results.
+          </p>
+          <div class="text-center mt-20">
+            <a href="#contact" class="btn btn-primary" onclick="switchPage('home-page'); setTimeout(() => document.getElementById('contact').scrollIntoView(), 100)">
+              <i class="fas fa-envelope"></i> Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-40">
+      <div class="container">
+        <h2 class="text-center mb-20">Contact Us</h2>
+        <div class="contact-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+          <div>
+            <h3 style="margin-bottom: 20px;">Get in Touch</h3>
+            <p style="margin-bottom: 30px;">
+              Have questions or feedback? We'd love to hear from you! Reach out to our team for support or suggestions.
+            </p>
+            
+            <div style="margin-bottom: 30px;">
+              <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <i class="fas fa-envelope" style="margin-right: 15px; color: var(--primary-color);"></i>
+                <span>officelvivek2004@gmail.com</span>
+              </div>
+              <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <i class="fas fa-phone" style="margin-right: 15px; color: var(--primary-color);"></i>
+                <span>+91 8446272897</span>
+              </div>
+            </div>
+            
+            <div>
+              <h4 style="margin-bottom: 15px;">Follow Us</h4>
+              <div style="display: flex; gap: 15px;">
+                <a href="#" style="color: var(--primary-color); font-size: 1.5rem;">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" style="color: var(--primary-color); font-size: 1.5rem;">
+                  <i class="fab fa-github"></i>
+                </a>
+                <a href="#" style="color: var(--primary-color); font-size: 1.5rem;">
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 style="margin-bottom: 20px;">Send a Message</h3>
+            <form id="contactForm">
+              <div style="margin-bottom: 15px;">
+                <label for="name" style="display: block; margin-bottom: 5px; font-weight: 500;">Your Name</label>
+                <input type="text" id="name" required style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px;">
+              </div>
+              <div style="margin-bottom: 15px;">
+                <label for="email" style="display: block; margin-bottom: 5px; font-weight: 500;">Email Address</label>
+                <input type="email" id="email" required style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px;">
+              </div>
+              <div style="margin-bottom: 15px;">
+                <label for="message" style="display: block; margin-bottom: 5px; font-weight: 500;">Message</label>
+                <textarea id="message" rows="5" required style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px;"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-paper-plane"></i> Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- Features Page -->
+  <section id="features-page" class="page">
+    <div class="container py-40">
+      <div class="announcement">
+        <h1>NEW UPDATE: PDF Conversion Tools Now Available! | Drag & Drop Support Added | More Features Coming Soon!</h1>
+        <span class="close-btn" onclick="this.parentElement.style.display='none'">
+          <i class="fas fa-times"></i>
+        </span>
+      </div>
+
+      <h1 class="text-center">Our Powerful Features</h1>
+      <p class="text-center" style="max-width: 700px; margin: 0 auto 40px; color: var(--gray);">
+        Discover all the amazing tools we offer to enhance and transform your images.
+      </p>
+      
+      <div class="tools-grid">
+        <div class="tool-card" onclick="switchPage('image-convert-page')">
+          <div class="tool-icon">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <h3>Image Converter</h3>
+          <p>Convert between JPEG, PNG, WebP, and BMP formats with ease.</p>
+          <div style="margin-top: 15px; color: var(--primary-color); font-weight: 500;">
+            <i class="fas fa-arrow-right"></i> Try Now
+          </div>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-resizing-page')">
+          <div class="tool-icon">
+            <i class="fas fa-expand"></i>
+          </div>
+          <h3>Image Resizer</h3>
+          <p>Resize images to your desired dimensions while maintaining quality.</p>
+          <div style="margin-top: 15px; color: var(--primary-color); font-weight: 500;">
+            <i class="fas fa-arrow-right"></i> Try Now
+          </div>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-cropping-page')">
+          <div class="tool-icon">
+            <i class="fas fa-crop"></i>
+          </div>
+          <h3>Image Cropper</h3>
+          <p>Crop images to focus on specific areas or remove unwanted parts.</p>
+          <div style="margin-top: 15px; color: var(--primary-color); font-weight: 500;">
+            <i class="fas fa-arrow-right"></i> Try Now
+          </div>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-rotation-page')">
+          <div class="tool-icon">
+            <i class="fas fa-sync-alt"></i>
+          </div>
+          <h3>Image Rotator</h3>
+          <p>Rotate images by 90°, 180°, or 270° to fix orientation issues.</p>
+          <div style="margin-top: 15px; color: var(--primary-color); font-weight: 500;">
+            <i class="fas fa-arrow-right"></i> Try Now
+          </div>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('image-to-pdf-page')">
+          <div class="tool-icon">
+            <i class="fas fa-file-pdf"></i>
+          </div>
+          <h3>Image to PDF</h3>
+          <p>Convert multiple images to PDF documents with customizable options.</p>
+          <div style="margin-top: 15px; color: var(--primary-color); font-weight: 500;">
+            <i class="fas fa-arrow-right"></i> Try Now
+          </div>
+        </div>
+        
+        <div class="tool-card" onclick="switchPage('pdf-to-image-page')">
+          <div class="tool-icon">
+            <i class="fas fa-file-image"></i>
+          </div>
+          <h3>PDF to Image</h3>
+          <p>Extract PDF pages as images in JPG, PNG, or WebP format.</p>
+          <div style="margin-top: 15px; color: var(--primary-color); font-weight: 500;">
+            <i class="fas fa-arrow-right"></i> Try Now
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Convert Page -->
+  <section id="image-convert-page" class="page tool-page">
+    <div class="container">
+      <h1><i class="fas fa-exchange-alt"></i> Image Converter</h1>
+      
+      <div class="drag-drop-container" id="convertDropZone">
+        <div class="drop-message">
+          <div class="drop-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h3 class="drop-text">Drag & Drop Image Here</h3>
+          <div class="file-import-btn" onclick="document.getElementById('imageInput').click()">
+            <i class="fas fa-folder-open"></i>
+            <span>Browse Files</span>
+          </div>
+          <p class="drop-hint">Supports JPG, PNG, WebP, BMP</p>
+          <input type="file" id="imageInput" accept="image/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;">
+        </div>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+        <div>
+          <label for="formatSelect" style="display: block; margin-bottom: 8px; font-weight: 500;">Output Format</label>
+          <select id="formatSelect" class="form-control">
+            <option value="jpeg">JPEG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WebP</option>
+            <option value="bmp">BMP</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Quality</label>
+          <input type="range" id="qualityRange" min="1" max="100" value="90" style="width: 100%;">
+          <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+            <span>Low</span>
+            <span id="qualityValue">90%</span>
+            <span>High</span>
+          </div>
+        </div>
+      </div>
+      
+      <button id="convertButton" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-exchange-alt"></i> Convert Image
+      </button>
+      
+      <div class="output" id="output1" style="text-align: center;"></div>
+    </div>
+  </section>
+
+  <!-- Image Resizing Page -->
+  <section id="image-resizing-page" class="page tool-page">
+    <div class="container">
+      <h1><i class="fas fa-expand"></i> Image Resizer</h1>
+      
+      <div class="drag-drop-container" id="resizeDropZone">
+        <div class="drop-message">
+          <div class="drop-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h3 class="drop-text">Drag & Drop Image Here</h3>
+          <div class="file-import-btn" onclick="document.getElementById('resizeImageInput').click()">
+            <i class="fas fa-folder-open"></i>
+            <span>Browse Files</span>
+          </div>
+          <p class="drop-hint">Supports JPG, PNG, WebP, BMP</p>
+          <input type="file" id="resizeImageInput" accept="image/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;">
+        </div>
+      </div>
+      
+      <div class="resize-controls" style="margin: 20px 0;">
+        <label style="display: block; margin-bottom: 15px; font-weight: 500;">Resize Options</label>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
+          <div>
+            <label for="widthInput" style="display: block; margin-bottom: 5px;">Width (px)</label>
+            <input type="number" id="widthInput" min="10" style="width: 100%;">
+          </div>
+          <div>
+            <label for="heightInput" style="display: block; margin-bottom: 5px;">Height (px)</label>
+            <input type="number" id="heightInput" min="10" style="width: 100%;">
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <label for="resizeRange" style="display: block; margin-bottom: 5px;">Scale (%)</label>
+          <input type="range" id="resizeRange" min="10" max="200" value="100" style="width: 100%;">
+          <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+            <span>10%</span>
+            <span id="scaleValue">100%</span>
+            <span>200%</span>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 5px;">Maintain Aspect Ratio</label>
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+            <input type="checkbox" id="aspectRatioCheck" checked style="width: auto;">
+            <span>Keep original proportions</span>
+          </label>
+        </div>
+      </div>
+      
+      <button id="resizeButton" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-expand"></i> Resize Image
+      </button>
+      
+      <div class="output" id="resizeOutput" style="text-align: center;"></div>
+    </div>
+  </section>
+
+  <!-- Image Cropping Page -->
+  <section id="image-cropping-page" class="page tool-page">
+    <div class="container">
+      <h1><i class="fas fa-crop"></i> Image Cropper</h1>
+      
+      <div class="drag-drop-container" id="cropDropZone">
+        <div class="drop-message">
+          <div class="drop-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h3 class="drop-text">Drag & Drop Image Here</h3>
+          <div class="file-import-btn" onclick="document.getElementById('cropImageInput').click()">
+            <i class="fas fa-folder-open"></i>
+            <span>Browse Files</span>
+          </div>
+          <p class="drop-hint">Supports JPG, PNG, WebP, BMP</p>
+          <input type="file" id="cropImageInput" accept="image/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;">
+        </div>
+      </div>
+      
+      <div style="margin: 20px 0; text-align: center;">
+        <h3 style="margin-bottom: 15px;">Crop Selection</h3>
+        <canvas id="cropCanvas" style="max-width: 100%; border: 2px dashed var(--primary-color);"></canvas>
+        <p style="margin-top: 15px; color: var(--gray);">
+          Click and drag on the image to select the area you want to crop
+        </p>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+        <div>
+          <label for="cropWidth" style="display: block; margin-bottom: 5px;">Width (px)</label>
+          <input type="number" id="cropWidth" readonly style="width: 100%;">
+        </div>
+        <div>
+          <label for="cropHeight" style="display: block; margin-bottom: 5px;">Height (px)</label>
+          <input type="number" id="cropHeight" readonly style="width: 100%;">
+        </div>
+      </div>
+      
+      <button id="cropButton" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-crop"></i> Crop Image
+      </button>
+      
+      <div class="output" id="cropOutput" style="text-align: center;"></div>
+    </div>
+  </section>
+
+  <!-- Image Rotation Page -->
+  <section id="image-rotation-page" class="page tool-page">
+    <div class="container">
+      <h1><i class="fas fa-sync-alt"></i> Image Rotator</h1>
+      
+      <div class="drag-drop-container" id="rotateDropZone">
+        <div class="drop-message">
+          <div class="drop-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h3 class="drop-text">Drag & Drop Image Here</h3>
+          <div class="file-import-btn" onclick="document.getElementById('rotateImageInput').click()">
+            <i class="fas fa-folder-open"></i>
+            <span>Browse Files</span>
+          </div>
+          <p class="drop-hint">Supports JPG, PNG, WebP, BMP</p>
+          <input type="file" id="rotateImageInput" accept="image/*" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;">
+        </div>
+      </div>
+      
+      <div style="margin: 20px 0;">
+        <label for="rotateSelect" style="display: block; margin-bottom: 8px; font-weight: 500;">Rotation Angle</label>
+        <select id="rotateSelect" class="form-control">
+          <option value="90">90° Clockwise</option>
+          <option value="-90">90° Counter-Clockwise</option>
+          <option value="180">180°</option>
+          <option value="270">270° Clockwise</option>
+        </select>
+      </div>
+      
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Quick Rotate</label>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+          <button class="quick-rotate-btn" data-angle="90" style="padding: 10px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; cursor: pointer;">
+            <i class="fas fa-redo"></i> 90°
+          </button>
+          <button class="quick-rotate-btn" data-angle="-90" style="padding: 10px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; cursor: pointer;">
+            <i class="fas fa-undo"></i> -90°
+          </button>
+          <button class="quick-rotate-btn" data-angle="180" style="padding: 10px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; cursor: pointer;">
+            <i class="fas fa-sync-alt"></i> 180°
+          </button>
+          <button class="quick-rotate-btn" data-angle="270" style="padding: 10px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px; cursor: pointer;">
+            <i class="fas fa-redo-alt"></i> 270°
+          </button>
+        </div>
+      </div>
+      
+      <button id="rotateButton" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-sync-alt"></i> Rotate Image
+      </button>
+      
+      <div class="output" id="rotateOutput" style="text-align: center;"></div>
+    </div>
+  </section>
+
+  <!-- Image to PDF Page -->
+  <section id="image-to-pdf-page" class="page tool-page">
+    <div class="container">
+      <h1><i class="fas fa-file-pdf"></i> Image to PDF Converter</h1>
+      
+      <div class="drag-drop-container" id="imageToPdfDropZone">
+        <div class="drop-message">
+          <div class="drop-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h3 class="drop-text">Drag & Drop Images Here</h3>
+          <div class="file-import-btn" onclick="document.getElementById('imageToPdfInput').click()">
+            <i class="fas fa-folder-open"></i>
+            <span>Browse Files</span>
+          </div>
+          <p class="drop-hint">Supports multiple images (JPG, PNG, WebP, BMP)</p>
+          <input type="file" id="imageToPdfInput" accept="image/*" multiple style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;">
+        </div>
+      </div>
+      
+      <div id="imagePreviewContainer" style="display: none; margin: 20px 0;">
+        <h3 style="margin-bottom: 15px;">Selected Images</h3>
+        <div id="imagePreviews" class="image-previews"></div>
+        <div style="text-align: center; margin-top: 20px;">
+          <button id="addMoreImagesBtn" class="btn" style="background: var(--primary-color); color: var(--white);">
+            <i class="fas fa-plus"></i> Add More Images
+          </button>
+        </div>
+        <p style="text-align: center; margin-top: 15px;">
+          Total Images Selected: <span id="imageCount" style="font-weight: bold; color: var(--primary-color);">0</span>
+        </p>
+      </div>
+      
+      <div style="margin: 20px 0;">
+        <h3 style="margin-bottom: 15px;">PDF Options</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
+          <div>
+            <label for="pdfOrientation" style="display: block; margin-bottom: 8px; font-weight: 500;">Orientation</label>
+            <select id="pdfOrientation" class="form-control">
+              <option value="portrait">Portrait</option>
+              <option value="landscape">Landscape</option>
+              <option value="auto">Auto (Match Image)</option>
+            </select>
+          </div>
+          <div>
+            <label for="pdfSize" style="display: block; margin-bottom: 8px; font-weight: 500;">Page Size</label>
+            <select id="pdfSize" class="form-control">
+              <option value="a4">A4</option>
+              <option value="letter">Letter</option>
+              <option value="legal">Legal</option>
+              <option value="auto">Auto (Match Image)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <label for="pdfMargin" style="display: block; margin-bottom: 8px; font-weight: 500;">Margin (mm)</label>
+          <input type="range" id="pdfMargin" min="0" max="30" value="10" style="width: 100%;">
+          <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+            <span>0</span>
+            <span id="marginValue">10</span>
+            <span>30</span>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Options</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="fitToPage" checked>
+              <span>Fit to Page</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="centerImage" checked>
+              <span>Center Image</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="addPageNumbers">
+              <span>Add Page Numbers</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <button id="convertToPdfButton" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-file-pdf"></i> Convert to PDF
+      </button>
+      
+      <div class="output" id="imageToPdfOutput" style="text-align: center;"></div>
+    </div>
+  </section>
+
+  <!-- PDF to Image Page -->
+  <section id="pdf-to-image-page" class="page tool-page">
+    <div class="container">
+      <h1><i class="fas fa-file-image"></i> PDF to Image Converter</h1>
+      
+      <div class="drag-drop-container" id="pdfDropZone">
+        <div class="drop-message">
+          <div class="drop-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <h3 class="drop-text">Drag & Drop PDF Here</h3>
+          <div class="file-import-btn" onclick="document.getElementById('pdfToImageInput').click()">
+            <i class="fas fa-folder-open"></i>
+            <span>Browse Files</span>
+          </div>
+          <p class="drop-hint">Supports PDF files up to 50MB</p>
+          <input type="file" id="pdfToImageInput" accept=".pdf" style="opacity: 0; position: absolute; inset: 0; width: 100%; height: 100%; cursor: pointer;">
+        </div>
+      </div>
+      
+      <div id="pdfPreviewContainer" style="display: none; margin: 20px 0;">
+        <h3 style="margin-bottom: 15px;">PDF Preview</h3>
+        <div id="pdfPreview" class="pdf-preview"></div>
+        <p style="text-align: center; margin-top: 10px;">
+          Pages: <span id="pageCount" style="font-weight: bold; color: var(--primary-color);">0</span>
+        </p>
+      </div>
+      
+      <div style="margin: 20px 0;">
+        <h3 style="margin-bottom: 15px;">Conversion Options</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
+          <div>
+            <label for="pdfImageFormat" style="display: block; margin-bottom: 8px; font-weight: 500;">Output Format</label>
+            <select id="pdfImageFormat" class="form-control">
+              <option value="jpeg">JPEG</option>
+              <option value="png">PNG</option>
+              <option value="webp">WebP</option>
+            </select>
+          </div>
+          <div>
+            <label for="pdfImageQuality" style="display: block; margin-bottom: 8px; font-weight: 500;">Quality</label>
+            <input type="range" id="pdfImageQuality" min="1" max="100" value="90" style="width: 100%;">
+            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+              <span>Low</span>
+              <span id="pdfQualityValue">90%</span>
+              <span>High</span>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <label style="display: block; margin-bottom: 8px; font-weight: 500;">Pages to Convert</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="radio" name="pagesToConvert" value="all" checked>
+              <span>All Pages</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="radio" name="pagesToConvert" value="range">
+              <span>Page Range:</span>
+              <input type="number" id="pageFrom" min="1" value="1" style="width: 60px;" disabled>
+              <span>to</span>
+              <input type="number" id="pageTo" min="1" value="1" style="width: 60px;" disabled>
+            </label>
+          </div>
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <label for="pdfImageScale" style="display: block; margin-bottom: 8px; font-weight: 500;">Scale</label>
+          <input type="range" id="pdfImageScale" min="10" max="200" value="100" style="width: 100%;">
+          <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+            <span>10%</span>
+            <span id="pdfScaleValue">100%</span>
+            <span>200%</span>
+          </div>
+        </div>
+      </div>
+      
+      <button id="convertPdfToImageButton" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-file-image"></i> Convert PDF to Images
+      </button>
+      
+      <div class="output" id="pdfToImageOutput" style="text-align: center;"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h3>Image Tools</h3>
+          <p>Your all-in-one solution for image processing and document conversion needs. Fast, secure, and completely free to use.</p>
+          <div style="display: flex; gap: 15px; margin-top: 20px;">
+            <a href="#" style="color: var(--white); font-size: 1.2rem;">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" style="color: var(--white); font-size: 1.2rem;">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" style="color: var(--white); font-size: 1.2rem;">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Quick Tools</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="#image-convert" onclick="switchPage('image-convert-page')">
+                <i class="fas fa-exchange-alt"></i> Image Converter
+              </a>
+            </li>
+            <li>
+              <a href="#image-resizing" onclick="switchPage('image-resizing-page')">
+                <i class="fas fa-expand"></i> Image Resizer
+              </a>
+            </li>
+            <li>
+              <a href="#image-cropping" onclick="switchPage('image-cropping-page')">
+                <i class="fas fa-crop"></i> Image Cropper
+              </a>
+            </li>
+            <li>
+              <a href="#image-to-pdf" onclick="switchPage('image-to-pdf-page')">
+                <i class="fas fa-file-pdf"></i> Image to PDF
+              </a>
+            </li>
+            <li>
+              <a href="#pdf-to-image" onclick="switchPage('pdf-to-image-page')">
+                <i class="fas fa-file-image"></i> PDF to Image
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Resources</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="#">
+                <i class="fas fa-book"></i> Documentation
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-video"></i> Tutorials
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-code"></i> API Reference
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-shield-alt"></i> Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fas fa-file-contract"></i> Terms of Service
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h3>Newsletter</h3>
+          <p>Subscribe to get updates on new features and tools.</p>
+          <div style="margin-top: 20px;">
+            <input type="email" placeholder="Your Email Address" style="width: 100%; padding: 10px; border-radius: 5px; border: none; margin-bottom: 10px;">
+            <button class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-envelope"></i> Subscribe
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; <span id="current-year"></span> Image Tools. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <script>
+    // Initialize PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+    
+    // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Check for saved theme preference or use preferred color scheme
+    if (localStorage.getItem('darkMode') === 'enabled' || 
+        (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+    }
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      if (body.classList.contains('dark-mode')) {
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+
+    // Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navMenu.classList.toggle('active');
+      menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+        '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        navMenu.classList.remove('active');
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+
+    // Toggle dropdown in mobile view
+    function toggleDropdown(dropdownId) {
+      const dropdown = document.getElementById(dropdownId);
+      if (window.innerWidth <= 768) {
+        dropdown.classList.toggle('active');
+        return false; // Prevent default behavior
+      }
+      return true;
+    }
+
+    // Show announcement function
+    function showAnnouncement() {
+      const announcements = document.querySelectorAll('.announcement');
+      announcements.forEach(announcement => {
+        announcement.style.display = 'flex';
+      });
+    }
+
+    // Page Switching
+    function switchPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+      
+      // Close mobile menu if open
+      if (navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    }
+
+    // Setup Drag and Drop
+    function setupDragAndDrop(dropZoneId, inputId) {
+      const dropZone = document.getElementById(dropZoneId);
+      const fileInput = document.getElementById(inputId);
+      
+      if (!dropZone || !fileInput) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropZone.classList.add('drag-over');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropZone.classList.remove('drag-over');
+        });
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          const event = new Event('change');
+          fileInput.dispatchEvent(event);
+        }
+      });
+
+      fileInput.addEventListener('change', function() {
+        const dropIcon = dropZone.querySelector('.drop-icon');
+        const dropText = dropZone.querySelector('.drop-text');
+        const dropHint = dropZone.querySelector('.drop-hint');
+        
+        if (this.files.length) {
+          const fileName = this.files[0].name;
+          dropText.textContent = fileName;
+          dropHint.textContent = `${this.files.length} file(s) selected`;
+          dropIcon.innerHTML = '<i class="fas fa-check"></i>';
+          dropIcon.style.backgroundColor = 'var(--success-color)';
+        } else {
+          dropText.textContent = 'Drag & Drop File Here';
+          dropHint.textContent = dropZone.querySelector('.drop-hint').getAttribute('data-original-hint');
+          dropIcon.innerHTML = '<i class="fas fa-cloud-upload-alt"></i>';
+          dropIcon.style.backgroundColor = 'var(--primary-color)';
+        }
+      });
+
+      // Store original hint text
+      const originalHint = dropZone.querySelector('.drop-hint').textContent;
+      dropZone.querySelector('.drop-hint').setAttribute('data-original-hint', originalHint);
+    }
+
+    // Initialize all drag and drop zones
+    document.addEventListener('DOMContentLoaded', function() {
+      setupDragAndDrop('convertDropZone', 'imageInput');
+      setupDragAndDrop('resizeDropZone', 'resizeImageInput');
+      setupDragAndDrop('cropDropZone', 'cropImageInput');
+      setupDragAndDrop('rotateDropZone', 'rotateImageInput');
+      setupDragAndDrop('imageToPdfDropZone', 'imageToPdfInput');
+      setupDragAndDrop('pdfDropZone', 'pdfToImageInput');
+
+      // Quality range inputs
+      document.querySelectorAll('input[type="range"]').forEach(range => {
+        const outputId = range.id + 'Value';
+        const outputElement = document.getElementById(outputId);
+        if (outputElement) {
+          outputElement.textContent = range.value + (range.id.includes('Quality') ? '%' : '');
+          range.addEventListener('input', () => {
+            outputElement.textContent = range.value + (range.id.includes('Quality') ? '%' : '');
+          });
+        }
+      });
+
+      // Page range toggle
+      document.querySelectorAll('input[name="pagesToConvert"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+          const pageFrom = document.getElementById('pageFrom');
+          const pageTo = document.getElementById('pageTo');
+          if (this.value === 'range') {
+            pageFrom.disabled = false;
+            pageTo.disabled = false;
+          } else {
+            pageFrom.disabled = true;
+            pageTo.disabled = true;
+          }
+        });
+      });
+    });
+
+    // Image Converter Logic
+    document.getElementById('convertButton').addEventListener('click', function() {
+      const fileInput = document.getElementById('imageInput');
+      const formatSelect = document.getElementById('formatSelect');
+      const qualityRange = document.getElementById('qualityRange');
+      const outputDiv = document.getElementById('output1');
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert('Please select an image first.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      outputDiv.innerHTML = '<div class="loader"></div>';
+
+      reader.onload = function(event) {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          let mimeType, quality;
+          switch(formatSelect.value) {
+            case 'jpeg': 
+              mimeType = 'image/jpeg';
+              quality = qualityRange.value / 100;
+              break;
+            case 'png': 
+              mimeType = 'image/png';
+              quality = undefined; // PNG doesn't support quality
+              break;
+            case 'webp': 
+              mimeType = 'image/webp';
+              quality = qualityRange.value / 100;
+              break;
+            case 'bmp': 
+              mimeType = 'image/bmp';
+              quality = undefined;
+              break;
+            default: 
+              mimeType = 'image/jpeg';
+              quality = 0.9;
+          }
+
+          const convertedImage = canvas.toDataURL(mimeType, quality);
+          outputDiv.innerHTML = `
+            <img src="${convertedImage}" alt="Converted Image" style="max-height: 500px;">
+            <div style="margin-top: 20px;">
+              <a href="${convertedImage}" download="converted-image.${formatSelect.value}" class="btn btn-primary">
+                <i class="fas fa-download"></i> Download Converted Image
+              </a>
+            </div>
+          `;
+        };
+        
+        img.onerror = function() {
+          outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error loading image. Please try another file.</p>';
+        };
+      };
+
+      reader.onerror = function() {
+        outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error reading file. Please try again.</p>';
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Image Resizing Logic
+    const resizeRange = document.getElementById('resizeRange');
+    const widthInput = document.getElementById('widthInput');
+    const heightInput = document.getElementById('heightInput');
+    const aspectRatioCheck = document.getElementById('aspectRatioCheck');
+    const outputDiv2 = document.getElementById('resizeOutput');
+    let originalWidth = 0, originalHeight = 0;
+
+    // Sync inputs
+    resizeRange.addEventListener('input', function() {
+      const scale = this.value / 100;
+      widthInput.value = Math.round(originalWidth * scale);
+      heightInput.value = Math.round(originalHeight * scale);
+      document.getElementById('scaleValue').textContent = this.value + '%';
+    });
+
+    widthInput.addEventListener('input', function() {
+      if (aspectRatioCheck.checked && originalWidth > 0) {
+        const ratio = originalHeight / originalWidth;
+        heightInput.value = Math.round(this.value * ratio);
+      }
+      updateRangeFromDimensions();
+    });
+
+    heightInput.addEventListener('input', function() {
+      if (aspectRatioCheck.checked && originalHeight > 0) {
+        const ratio = originalWidth / originalHeight;
+        widthInput.value = Math.round(this.value * ratio);
+      }
+      updateRangeFromDimensions();
+    });
+
+    function updateRangeFromDimensions() {
+      if (originalWidth > 0 && widthInput.value) {
+        const scale = (widthInput.value / originalWidth) * 100;
+        resizeRange.value = scale;
+        document.getElementById('scaleValue').textContent = Math.round(scale) + '%';
+      }
+    }
+
+    // Load image
+    document.getElementById('resizeImageInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      outputDiv2.innerHTML = '<div class="loader"></div>';
+
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = function() {
+          originalWidth = img.width;
+          originalHeight = img.height;
+          widthInput.value = img.width;
+          heightInput.value = img.height;
+          resizeRange.value = 100;
+          document.getElementById('scaleValue').textContent = '100%';
+          outputDiv2.innerHTML = '<p>Adjust the settings above and click "Resize Image"</p>';
+        };
+        
+        img.onerror = function() {
+          outputDiv2.innerHTML = '<p style="color: var(--danger-color);">Error loading image. Please try another file.</p>';
+        };
+      };
+
+      reader.onerror = function() {
+        outputDiv2.innerHTML = '<p style="color: var(--danger-color);">Error reading file. Please try again.</p>';
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Resize image
+    document.getElementById('resizeButton').addEventListener('click', function() {
+      const fileInput = document.getElementById('resizeImageInput');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert('Please select an image first.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      outputDiv2.innerHTML = '<div class="loader"></div>';
+
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = parseInt(widthInput.value) || img.width;
+          canvas.height = parseInt(heightInput.value) || img.height;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          const resizedImage = canvas.toDataURL('image/jpeg', 0.9);
+          outputDiv2.innerHTML = `
+            <img src="${resizedImage}" alt="Resized Image" style="max-height: 500px;">
+            <div style="margin-top: 20px;">
+              <a href="${resizedImage}" download="resized-image.jpg" class="btn btn-primary">
+                <i class="fas fa-download"></i> Download Resized Image
+              </a>
+            </div>
+          `;
+        };
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Image Cropping Logic
+    let cropCanvas, cropCtx;
+    let isCropping = false;
+    let cropStartX, cropStartY, cropEndX, cropEndY;
+    let originalImageData;
+
+    document.getElementById('cropImageInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      const outputDiv = document.getElementById('cropOutput');
+      outputDiv.innerHTML = '<div class="loader"></div>';
+
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = function() {
+          cropCanvas = document.getElementById('cropCanvas');
+          cropCtx = cropCanvas.getContext('2d');
+          cropCanvas.width = img.width;
+          cropCanvas.height = img.height;
+          cropCtx.drawImage(img, 0, 0);
+          
+          originalImageData = cropCtx.getImageData(0, 0, cropCanvas.width, cropCanvas.height);
+          cropStartX = cropStartY = cropEndX = cropEndY = 0;
+          isCropping = false;
+
+          document.getElementById('cropWidth').value = '0';
+          document.getElementById('cropHeight').value = '0';
+          
+          cropCanvas.addEventListener('mousedown', startCropping);
+          cropCanvas.addEventListener('mousemove', drawCropBox);
+          cropCanvas.addEventListener('mouseup', endCropping);
+          
+          outputDiv.innerHTML = '<p>Click and drag on the image to select the area to crop</p>';
+        };
+        
+        img.onerror = function() {
+          outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error loading image. Please try another file.</p>';
+        };
+      };
+
+      reader.onerror = function() {
+        outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error reading file. Please try again.</p>';
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    function startCropping(e) {
+      isCropping = true;
+      const rect = cropCanvas.getBoundingClientRect();
+      cropStartX = e.clientX - rect.left;
+      cropStartY = e.clientY - rect.top;
+      cropEndX = cropStartX;
+      cropEndY = cropStartY;
+    }
+
+    function drawCropBox(e) {
+      if (!isCropping) return;
+
+      const rect = cropCanvas.getBoundingClientRect();
+      cropEndX = e.clientX - rect.left;
+      cropEndY = e.clientY - rect.top;
+
+      cropCtx.putImageData(originalImageData, 0, 0);
+      
+      cropCtx.strokeStyle = 'var(--primary-color)';
+      cropCtx.lineWidth = 2;
+      cropCtx.setLineDash([5, 5]);
+      cropCtx.strokeRect(
+        cropStartX,
+        cropStartY,
+        cropEndX - cropStartX,
+        cropEndY - cropStartY
+      );
+      cropCtx.setLineDash([]);
+
+      document.getElementById('cropWidth').value = Math.abs(cropEndX - cropStartX);
+      document.getElementById('cropHeight').value = Math.abs(cropEndY - cropStartY);
+    }
+
+    function endCropping() {
+      isCropping = false;
+    }
+
+    document.getElementById('cropButton').addEventListener('click', function() {
+      if (!cropCanvas || !cropCtx) {
+        alert('Please select an image first.');
+        return;
+      }
+
+      const width = Math.abs(cropEndX - cropStartX);
+      const height = Math.abs(cropEndY - cropStartY);
+
+      if (width === 0 || height === 0) {
+        alert('Please select a valid cropping area by clicking and dragging on the image.');
+        return;
+      }
+
+      const croppedCanvas = document.createElement('canvas');
+      const croppedCtx = croppedCanvas.getContext('2d');
+      croppedCanvas.width = width;
+      croppedCanvas.height = height;
+
+      croppedCtx.drawImage(
+        cropCanvas,
+        Math.min(cropStartX, cropEndX),
+        Math.min(cropStartY, cropEndY),
+        width,
+        height,
+        0,
+        0,
+        width,
+        height
+      );
+
+      const croppedImage = croppedCanvas.toDataURL('image/jpeg');
+      const outputDiv = document.getElementById('cropOutput');
+      outputDiv.innerHTML = `
+        <img src="${croppedImage}" alt="Cropped Image" style="max-height: 500px;">
+        <div style="margin-top: 20px;">
+          <a href="${croppedImage}" download="cropped-image.jpg" class="btn btn-primary">
+            <i class="fas fa-download"></i> Download Cropped Image
+          </a>
+        </div>
+      `;
+    });
+
+    // Image Rotation Logic
+    document.getElementById('rotateButton').addEventListener('click', function() {
+      const fileInput = document.getElementById('rotateImageInput');
+      const rotateSelect = document.getElementById('rotateSelect');
+      const outputDiv = document.getElementById('rotateOutput');
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert('Please select an image first.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      outputDiv.innerHTML = '<div class="loader"></div>';
+
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const angle = parseInt(rotateSelect.value);
+          
+          if (angle === 90 || angle === -90 || angle === 270) {
+            canvas.width = img.height;
+            canvas.height = img.width;
+          } else {
+            canvas.width = img.width;
+            canvas.height = img.height;
+          }
+
+          const ctx = canvas.getContext('2d');
+          ctx.translate(canvas.width / 2, canvas.height / 2);
+          ctx.rotate(angle * Math.PI / 180);
+          ctx.drawImage(img, -img.width / 2, -img.height / 2);
+
+          const rotatedImage = canvas.toDataURL('image/jpeg');
+          outputDiv.innerHTML = `
+            <img src="${rotatedImage}" alt="Rotated Image" style="max-height: 500px;">
+            <div style="margin-top: 20px;">
+              <a href="${rotatedImage}" download="rotated-image.jpg" class="btn btn-primary">
+                <i class="fas fa-download"></i> Download Rotated Image
+              </a>
+            </div>
+          `;
+        };
+        
+        img.onerror = function() {
+          outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error loading image. Please try another file.</p>';
+        };
+      };
+
+      reader.onerror = function() {
+        outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error reading file. Please try again.</p>';
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    // Quick rotate buttons
+    document.querySelectorAll('.quick-rotate-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.getElementById('rotateSelect').value = this.getAttribute('data-angle');
+      });
+    });
+
+    // Image to PDF Logic
+    let allSelectedImages = [];
+    document.getElementById('imageToPdfInput').addEventListener('change', handleImageSelection);
+    document.getElementById('addMoreImagesBtn').addEventListener('click', function() {
+      document.getElementById('imageToPdfInput').click();
+    });
+
+    function handleImageSelection() {
+      const fileInput = document.getElementById('imageToPdfInput');
+      const previewContainer = document.getElementById('imagePreviewContainer');
+      const addMoreBtn = document.getElementById('addMoreImagesBtn');
+      
+      if (!fileInput.files || fileInput.files.length === 0) {
+        if (allSelectedImages.length === 0) {
+          previewContainer.style.display = 'none';
+          addMoreBtn.style.display = 'none';
+        }
+        return;
+      }
+
+      const newFiles = Array.from(fileInput.files).filter(file => file.type.match('image.*'));
+      allSelectedImages = [...allSelectedImages, ...newFiles];
+      fileInput.value = '';
+      updateImagePreviews();
+      
+      previewContainer.style.display = 'block';
+      addMoreBtn.style.display = 'block';
+      document.getElementById('imageCount').textContent = allSelectedImages.length;
+    }
+
+    function updateImagePreviews() {
+      const previewsDiv = document.getElementById('imagePreviews');
+      previewsDiv.innerHTML = '';
+      
+      allSelectedImages.forEach((file, index) => {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          const imgContainer = document.createElement('div');
+          imgContainer.className = 'image-preview';
+          
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          
+          const imgNumber = document.createElement('div');
+          imgNumber.className = 'image-number';
+          imgNumber.textContent = `#${index+1}`;
+          
+          const deleteBtn = document.createElement('button');
+          deleteBtn.className = 'delete-btn';
+          deleteBtn.innerHTML = '&times;';
+          deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            allSelectedImages.splice(index, 1);
+            updateImagePreviews();
+            document.getElementById('imageCount').textContent = allSelectedImages.length;
+            if (allSelectedImages.length === 0) {
+              document.getElementById('imagePreviewContainer').style.display = 'none';
+              document.getElementById('addMoreImagesBtn').style.display = 'none';
+            }
+          });
+          
+          imgContainer.appendChild(img);
+          imgContainer.appendChild(imgNumber);
+          imgContainer.appendChild(deleteBtn);
+          previewsDiv.appendChild(imgContainer);
+        };
+        
+        reader.readAsDataURL(file);
+      });
+    }
+
+    document.getElementById('convertToPdfButton').addEventListener('click', function() {
+      const outputDiv = document.getElementById('imageToPdfOutput');
+      const orientation = document.getElementById('pdfOrientation').value;
+      const size = document.getElementById('pdfSize').value;
+      const margin = parseInt(document.getElementById('pdfMargin').value);
+      const fitToPage = document.getElementById('fitToPage').checked;
+      const centerImage = document.getElementById('centerImage').checked;
+      const addPageNumbers = document.getElementById('addPageNumbers').checked;
+
+      if (allSelectedImages.length === 0) {
+        alert('Please select at least one image first.');
+        return;
+      }
+
+      outputDiv.innerHTML = `
+        <div style="text-align: center; padding: 30px;">
+          <div class="loader" style="margin: 0 auto;"></div>
+          <p style="margin-top: 15px;">Processing ${allSelectedImages.length} images...</p>
+        </div>
+      `;
+      this.disabled = true;
+
+      const { jsPDF } = window.jspdf;
+      let pdf;
+      
+      if (size === 'auto') {
+        pdf = new jsPDF();
+      } else {
+        let dimensions;
+        switch(size) {
+          case 'a4': dimensions = { width: 210, height: 297 }; break;
+          case 'letter': dimensions = { width: 215.9, height: 279.4 }; break;
+          case 'legal': dimensions = { width: 215.9, height: 355.6 }; break;
+          default: dimensions = { width: 210, height: 297 };
+        }
+        
+        pdf = new jsPDF({
+          orientation: orientation === 'landscape' ? 'landscape' : 'portrait',
+          unit: 'mm',
+          format: [dimensions.width, dimensions.height]
+        });
+      }
+
+      const promises = allSelectedImages.map((file, i) => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = function() {
+              let imgWidth, imgHeight, x, y;
+              const pdfWidth = pdf.internal.pageSize.getWidth();
+              const pdfHeight = pdf.internal.pageSize.getHeight();
+              
+              if (size === 'auto' && orientation === 'auto') {
+                const aspectRatio = img.width / img.height;
+                imgWidth = pdfWidth - (margin * 2);
+                imgHeight = imgWidth / aspectRatio;
+                
+                if (imgHeight > pdfHeight - (margin * 2)) {
+                  imgHeight = pdfHeight - (margin * 2);
+                  imgWidth = imgHeight * aspectRatio;
+                }
+              } else if (fitToPage) {
+                const pageAspect = pdfWidth / pdfHeight;
+                const imgAspect = img.width / img.height;
+                
+                if (imgAspect > pageAspect) {
+                  imgWidth = pdfWidth - (margin * 2);
+                  imgHeight = imgWidth / imgAspect;
+                } else {
+                  imgHeight = pdfHeight - (margin * 2);
+                  imgWidth = imgHeight * imgAspect;
+                }
+              } else {
+                const scale = 0.264583; // px to mm
+                imgWidth = img.width * scale;
+                imgHeight = img.height * scale;
+              }
+              
+              x = centerImage ? (pdfWidth - imgWidth) / 2 : margin;
+              y = centerImage ? (pdfHeight - imgHeight) / 2 : margin;
+              
+              if (i > 0) pdf.addPage();
+              pdf.addImage(img.src, 'JPEG', x, y, imgWidth, imgHeight);
+              
+              if (addPageNumbers) {
+                pdf.setFontSize(10);
+                pdf.text(`Page ${i+1} of ${allSelectedImages.length}`, pdfWidth - 20, pdfHeight - 10);
+              }
+              
+              resolve();
+            };
+          };
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(promises)
+        .then(() => {
+          const pdfBlob = pdf.output('blob');
+          const pdfUrl = URL.createObjectURL(pdfBlob);
+          
+          outputDiv.innerHTML = `
+            <div style="text-align: center; margin: 20px 0;">
+              <p style="font-weight: bold; color: var(--success-color); font-size: 18px;">PDF Created Successfully!</p>
+              <p>${allSelectedImages.length} images converted to PDF</p>
+            </div>
+            <iframe src="${pdfUrl}" class="pdf-preview"></iframe>
+            <div style="text-align: center; margin-top: 20px;">
+              <a href="${pdfUrl}" download="converted-images.pdf" class="btn btn-primary">
+                <i class="fas fa-download"></i> Download PDF
+              </a>
+            </div>
+          `;
+          document.getElementById('convertToPdfButton').disabled = false;
+        })
+        .catch(error => {
+          outputDiv.innerHTML = `
+            <div style="color: var(--danger-color); text-align: center; padding: 20px;">
+              <p style="font-weight: bold;">Error during conversion</p>
+              <p>${error.message}</p>
+            </div>
+          `;
+          console.error('Conversion error:', error);
+          document.getElementById('convertToPdfButton').disabled = false;
+        });
+    });
+
+    // PDF to Image Logic
+    document.getElementById('pdfToImageInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const previewContainer = document.getElementById('pdfPreviewContainer');
+      const previewDiv = document.getElementById('pdfPreview');
+      const pageCountSpan = document.getElementById('pageCount');
+
+      previewContainer.style.display = 'block';
+      previewDiv.innerHTML = '<div class="loader"></div>';
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const typedArray = new Uint8Array(event.target.result);
+        
+        pdfjsLib.getDocument(typedArray).promise.then(function(pdf) {
+          pageCountSpan.textContent = pdf.numPages;
+          
+          // Update page range inputs
+          document.getElementById('pageFrom').max = pdf.numPages;
+          document.getElementById('pageTo').max = pdf.numPages;
+          document.getElementById('pageTo').value = pdf.numPages;
+          
+          // Show first page as preview
+          pdf.getPage(1).then(function(page) {
+            const viewport = page.getViewport({ scale: 0.5 });
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            page.render({
+              canvasContext: context,
+              viewport: viewport
+            }).promise.then(function() {
+              previewDiv.innerHTML = '';
+              previewDiv.appendChild(canvas);
+            });
+          });
+        }).catch(function(error) {
+          previewDiv.innerHTML = '<p style="color: var(--danger-color);">Error loading PDF. Please try another file.</p>';
+          console.error('PDF loading error:', error);
+        });
+      };
+      
+      reader.onerror = function() {
+        previewDiv.innerHTML = '<p style="color: var(--danger-color);">Error reading file. Please try again.</p>';
+      };
+      
+      reader.readAsArrayBuffer(file);
+    });
+
+    document.getElementById('convertPdfToImageButton').addEventListener('click', function() {
+      const fileInput = document.getElementById('pdfToImageInput');
+      const formatSelect = document.getElementById('pdfImageFormat');
+      const quality = parseInt(document.getElementById('pdfImageQuality').value) / 100;
+      const scale = parseInt(document.getElementById('pdfImageScale').value) / 100;
+      const pagesToConvert = document.querySelector('input[name="pagesToConvert"]:checked').value;
+      const pageFrom = parseInt(document.getElementById('pageFrom').value) || 1;
+      const pageTo = parseInt(document.getElementById('pageTo').value) || 1;
+      const outputDiv = document.getElementById('pdfToImageOutput');
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert('Please select a PDF file first.');
+        return;
+      }
+
+      outputDiv.innerHTML = '<div class="loader"></div>';
+      this.disabled = true;
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      
+      reader.onload = function(event) {
+        const typedArray = new Uint8Array(event.target.result);
+        
+        pdfjsLib.getDocument(typedArray).promise.then(function(pdf) {
+          const promises = [];
+          const zip = new JSZip();
+          const imgFolder = zip.folder("pdf_images");
+          let totalPages = pdf.numPages;
+          
+          // Determine pages to convert
+          let startPage = 1, endPage = totalPages;
+          if (pagesToConvert === 'range') {
+            startPage = Math.max(1, Math.min(pageFrom, totalPages));
+            endPage = Math.max(1, Math.min(pageTo, totalPages));
+            if (startPage > endPage) [startPage, endPage] = [endPage, startPage];
+          }
+          
+          // Process each page
+          for (let i = startPage; i <= endPage; i++) {
+            promises.push(
+              pdf.getPage(i).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                return page.render({
+                  canvasContext: context,
+                  viewport: viewport
+                }).promise.then(function() {
+                  let mimeType;
+                  switch(formatSelect.value) {
+                    case 'jpeg': mimeType = 'image/jpeg'; break;
+                    case 'png': mimeType = 'image/png'; break;
+                    case 'webp': mimeType = 'image/webp'; break;
+                    default: mimeType = 'image/jpeg';
+                  }
+                  
+                  const imageData = canvas.toDataURL(mimeType, quality).split(',')[1];
+                  imgFolder.file(`page_${i}.${formatSelect.value}`, imageData, {base64: true});
+                  return {
+                    dataUrl: canvas.toDataURL(mimeType, quality),
+                    pageNumber: i
+                  };
+                });
+              })
+            );
+          }
+          
+          Promise.all(promises).then(function(images) {
+            let outputHTML = '';
+            
+            images.forEach((image) => {
+              outputHTML += `
+                <div class="pdf-page-container" style="margin-bottom: 20px; padding: 15px; background: var(--card-bg); border-radius: 8px; box-shadow: 0 4px 10px var(--shadow-color);">
+                  <h3>Page ${image.pageNumber}</h3>
+                  <img src="${image.dataUrl}" alt="Page ${image.pageNumber}" style="max-height: 300px;">
+                  <div style="margin-top: 15px;">
+                    <a href="${image.dataUrl}" download="page_${image.pageNumber}.${formatSelect.value}" class="btn btn-primary">
+                      <i class="fas fa-download"></i> Download Page ${image.pageNumber}
+                    </a>
+                  </div>
+                </div>
+              `;
+            });
+            
+            if (images.length > 1) {
+              outputHTML += `
+                <div class="download-all-container" style="text-align: center; margin-top: 30px;">
+                  <button id="downloadAllImages" class="btn btn-success">
+                    <i class="fas fa-file-archive"></i> Download All Pages as ZIP
+                  </button>
+                </div>
+              `;
+            }
+            
+            outputDiv.innerHTML = outputHTML;
+            document.getElementById('convertPdfToImageButton').disabled = false;
+            
+            if (images.length > 1) {
+              document.getElementById('downloadAllImages').addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating ZIP...';
+                this.disabled = true;
+                
+                zip.generateAsync({type: "blob"}).then(function(content) {
+                  saveAs(content, "pdf_images.zip");
+                  const btn = document.getElementById('downloadAllImages');
+                  btn.innerHTML = '<i class="fas fa-file-archive"></i> Download All Pages as ZIP';
+                  btn.disabled = false;
+                });
+              });
+            }
+          });
+        }).catch(function(error) {
+          outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error processing PDF. Please try another file.</p>';
+          console.error('PDF processing error:', error);
+          document.getElementById('convertPdfToImageButton').disabled = false;
+        });
+      };
+      
+      reader.onerror = function() {
+        outputDiv.innerHTML = '<p style="color: var(--danger-color);">Error reading file. Please try again.</p>';
+        document.getElementById('convertPdfToImageButton').disabled = false;
+      };
+      
+      reader.readAsArrayBuffer(file);
+    });
+
+    // Contact Form Submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      submitBtn.disabled = true;
+      
+      // Simulate form submission
+      setTimeout(() => {
+        submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+        setTimeout(() => {
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+          submitBtn.disabled = false;
+          form.reset();
+        }, 2000);
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
